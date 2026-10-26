@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task | TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Task<span>Flow</span></h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+            ← Dashboard
+        </a>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>Add a New Task</h2>
+
+            <p class="welcome">
+                Create a task for the project: <strong>{{ project.title }}</strong>
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="title">Task Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter task title"
+                    maxlength="200"
+                    required
+                >
+
+                <br><br>
+
+                <label for="description">Task Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                    placeholder="Describe what needs to be done..."
+                ></textarea>
+
+                <br><br>
+
+                <label for="assigned_to">Assign To</label>
+                <select id="assigned_to" name="assigned_to">
+                    <option value="">Unassigned</option>
+                    {% for user in users %}
+                        <option value="{{ user.id }}">
+                            {{ user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <br><br>
+
+                <label for="status">Task Status</label>
+                <select id="status" name="status">
+                    <option value="todo">To Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+
+                <br><br>
+
+                <label for="due_date">Due Date</label>
+                <input
+                    type="date"
+                    id="due_date"
+                    name="due_date"
+                >
+
+                <div class="form-actions">
+                    <button type="submit">Create Task</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

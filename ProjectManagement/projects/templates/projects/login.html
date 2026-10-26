@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Task<span>Flow</span></h1>
+        <a href="{% url 'register' %}" class="btn btn-secondary">
+            Create Account
+        </a>
+    </header>
+
+    <main>
+        <div class="auth-container">
+            <div class="form-card">
+                <h2>Welcome Back! 👋</h2>
+                <p class="welcome">
+                    Login to manage your projects and tasks.
+                </p>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    {{ form.as_p }}
+
+                    <button type="submit" style="width: 100%;">
+                        Login to TaskFlow
+                    </button>
+                </form>
+
+                <p style="text-align: center; margin-top: 22px;">
+                    Don't have an account?
+                    <a href="{% url 'register' %}">Register here</a>
+                </p>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

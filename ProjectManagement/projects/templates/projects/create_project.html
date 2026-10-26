@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Project | TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Task<span>Flow</span></h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Dashboard</a>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>Create a New Project</h2>
+            <p class="welcome">Organize your work by creating a new project.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="title">Project Name</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    placeholder="Enter your project name"
+                    maxlength="200"
+                    required
+                >
+
+                <br><br>
+
+                <label for="description">Project Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="5"
+                    placeholder="Describe your project..."
+                ></textarea>
+
+                <div class="form-actions">
+                    <button type="submit">Create Project</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+
+</body>
+</html>

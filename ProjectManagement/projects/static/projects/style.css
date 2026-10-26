@@ -1,0 +1,467 @@
+body {
+    background-color: rgb(136, 179, 194) !important;
+}@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #6c5ce7;
+    --primary-dark: #5541d7;
+    --background: #f5f6fc;
+    --surface: #ffffff;
+    --text: #20233a;
+    --muted: #8589a5;
+    --border: #e9eaf3;
+    --success: #159b72;
+    --warning: #d99016;
+    --shadow: 0 8px 28px rgba(36, 39, 75, 0.06);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 6%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+header h1 {
+    font-size: 25px;
+    margin: 0;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+header h1 span {
+    color: var(--primary);
+}
+
+main {
+    max-width: 1150px;
+    margin: 40px auto;
+    padding: 0 24px;
+}
+
+.welcome {
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.dashboard-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+}
+
+.dashboard-heading h2 {
+    font-size: 28px;
+    margin: 0;
+    letter-spacing: -0.8px;
+}
+
+button,
+.btn {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 11px 17px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover,
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+    background: #f0efff;
+    color: var(--primary);
+}
+
+.logout-button {
+    background: #fff0f0;
+    color: #d34d5b;
+    padding: 9px 14px;
+}
+
+.logout-button:hover {
+    background: #ffe0e0;
+}
+
+.project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+}
+
+.project-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.project-card h3 {
+    font-size: 21px;
+    margin: 0 0 8px;
+}
+
+.project-description {
+    color: var(--muted);
+    margin: 0 0 12px;
+}
+
+.project-date {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.tasks-heading {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.tasks-heading h4 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.task-card {
+    padding: 17px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-top: 13px;
+    background: #fdfdff;
+}
+
+.task-card h5 {
+    font-size: 15px;
+    margin: 0 0 6px;
+}
+
+.task-card p {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 6px 0;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.status-todo {
+    background: #fff3d8;
+    color: #a96a00;
+}
+
+.status-in_progress {
+    background: #e9e5ff;
+    color: #5c48c9;
+}
+
+.status-completed {
+    background: #dff8ed;
+    color: #13865f;
+}
+
+.empty-state {
+    padding: 28px 15px;
+    text-align: center;
+    background: #fafaff;
+    border: 1px dashed #d9d7ed;
+    border-radius: 12px;
+    color: var(--muted);
+    margin-top: 15px;
+}
+
+.form-card {
+    max-width: 650px;
+    margin: 35px auto;
+    padding: 32px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+.form-card h2 {
+    margin-top: 0;
+    font-size: 25px;
+}
+
+form p {
+    margin-bottom: 18px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 12px 13px;
+    border: 1px solid #dfe1ee;
+    border-radius: 9px;
+    font: inherit;
+    font-size: 14px;
+    background: white;
+    color: var(--text);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.12);
+}
+
+label {
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+}
+
+.auth-container {
+    max-width: 440px;
+    margin: 65px auto;
+    padding: 0 20px;
+}
+
+.auth-container .form-card {
+    margin: 0;
+}
+
+a {
+    color: var(--primary);
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 16px 20px;
+    }
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    main {
+        margin: 25px auto;
+        padding: 0 15px;
+    }
+
+    .dashboard-heading h2 {
+        font-size: 23px;
+    }
+
+    .project-card,
+    .form-card {
+        padding: 20px;
+    }
+}.welcome {
+    color: #243b64 !important;
+}/* TaskFlow dashboard improvements */
+
+body {
+    background-color: lightblue !important;
+    color: #1e293b;
+}
+
+/* Main heading */
+header h1 {
+    color: #183153;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+/* Welcome message */
+.welcome {
+    color: #243b64 !important;
+    font-size: 15px;
+}
+
+/* Dashboard heading */
+.dashboard-heading h2 {
+    color: #183153;
+    font-weight: 800;
+}
+
+/* Project cards */
+.project-card {
+    background: #ffffff;
+    border: 1px solid #d5e5f5;
+    border-radius: 16px;
+    box-shadow: 0 8px 25px rgba(25, 55, 90, 0.10);
+}
+
+/* Project title */
+.project-card h3 {
+    color: #234e83;
+}
+
+/* Task cards */
+.task-card {
+    background: #f7fbff;
+    border: 1px solid #dce9f5;
+    border-radius: 12px;
+}
+
+/* Buttons */
+.btn {
+    background: #2563eb;
+    color: #ffffff;
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+/* Add task button */
+.btn-secondary {
+    background: #ffffff;
+    color: #2563eb;
+    border: 1px solid #2563eb;
+}
+
+.btn-secondary:hover {
+    background: #eaf2ff;
+    color: #1d4ed8;
+}
+
+/* Project task heading */
+.tasks-heading h4 {
+    color: #234e83;
+}
+
+/* Task descriptions */
+.project-description,
+.task-card p,
+.project-date {
+    color: #52647a;
+}
+
+/* Empty task message */
+.empty-state {
+    background: #f7fbff;
+    border: 1px dashed #9dbbd9;
+    color: #52647a;
+    border-radius: 12px;
+}
+
+/* Logout button */
+.logout-button {
+    background: #ffffff;
+    color: #c0394b;
+    border: 1px solid #f0c4ca;
+}
+
+.logout-button:hover {
+    background: #fff0f2;
+}/* Edit and Delete task buttons */
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.task-actions .btn {
+    display: inline-block;
+    padding: 9px 16px;
+    text-decoration: none;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: #ffffff;
+    border: 1px solid #dc3545;
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+.btn-danger:hover {
+    background: #b02a37;
+    border-color: #b02a37;
+}/* Project progress bar */
+
+.project-progress {
+    margin: 20px 0;
+    padding: 16px;
+    background: #f7fbff;
+    border: 1px solid #dce9f5;
+    border-radius: 12px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+    color: #234e83;
+}
+
+.progress-track {
+    width: 100%;
+    height: 12px;
+    background: #dce9f5;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #2563eb;
+    border-radius: 20px;
+    transition: width 0.3s ease;
+}

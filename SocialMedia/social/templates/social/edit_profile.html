@@ -1,0 +1,98 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - ConnectHub</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        textarea, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 18px;
+            background: #172554;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            color: #172554;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>ConnectHub</h1>
+    <p>Edit Your Profile</p>
+</header>
+
+<div class="container">
+    <h2>Update Profile</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio" rows="4"
+                  placeholder="Tell us about yourself">{{ profile.bio }}</textarea>
+
+        <label for="profile_picture">Profile Picture URL</label>
+        <input type="url" id="profile_picture" name="profile_picture"
+               value="{{ profile.profile_picture }}"
+               placeholder="https://example.com/photo.jpg">
+
+        <button type="submit">Save Profile</button>
+    </form>
+
+    <a class="back" href="{% url 'profile' request.user.id %}">
+        Back to Profile
+    </a>
+</div>
+
+</body>
+</html>
+```

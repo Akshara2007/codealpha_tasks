@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile_user.username }} - ConnectHub</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 18px 8%;
+        }
+
+        header a {
+            color: white;
+        }
+
+        main {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        .card, .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .username {
+            color: #172554;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #777;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <strong>ConnectHub</strong>
+        &nbsp; | &nbsp;
+        <a href="{% url 'home' %}">Home</a>
+    </header>
+
+    <main>
+        <section class="card">
+            <div class="username">{{ profile_user.username }}</div>
+
+{% if user.is_authenticated and user == profile_user %}
+    <a href="{% url 'edit_profile' %}"
+       style="display: inline-block; padding: 10px 16px;
+              background: #172554; color: white;
+              text-decoration: none; border-radius: 5px;
+              margin-top: 10px;">
+        Edit Profile
+    </a>
+{% endif %}
+
+            {% if profile.profile_picture %}
+                <img src="{{ profile.profile_picture }}"
+                     alt="Profile picture"
+                     width="100">
+            {% endif %}
+
+            <p>{{ profile.bio|default:"No bio added yet." }}</p>
+
+            <p>
+                <strong>Followers:</strong>
+                {{ profile_user.followers.count }}
+            </p>
+
+            <p>
+                <strong>Following:</strong>
+                {{ profile_user.following.count }}
+            </p>
+        </section>
+
+        <h2>Posts by {{ profile_user.username }}</h2>
+
+        {% for post in posts %}
+            <article class="post">
+                <p>{{ post.content }}</p>
+                <div class="date">{{ post.created_at }}</div>
+                <p>❤️ {{ post.likes.count }} Likes</p>
+            </article>
+        {% empty %}
+            <div class="card">
+                This user hasn't posted anything yet.
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>

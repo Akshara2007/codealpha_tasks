@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Task | TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+    <style>
+        .delete-card {
+            max-width: 500px;
+            margin: 60px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(25, 55, 90, 0.12);
+            text-align: center;
+        }
+
+        .delete-card h2 {
+            color: #c0394b;
+        }
+
+        .delete-card p {
+            color: #52647a;
+            line-height: 1.6;
+        }
+
+        .delete-button {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 9px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background: #b02a37;
+        }
+
+        .cancel-button {
+            display: inline-block;
+            padding: 12px 20px;
+            margin-left: 8px;
+            border-radius: 9px;
+            background: #eaf2ff;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Task<span>Flow</span></h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Dashboard</a>
+    </header>
+
+    <main>
+        <div class="delete-card">
+            <h2>Delete Task? 🗑️</h2>
+
+            <p>
+                Are you sure you want to delete
+                <strong>{{ task.title }}</strong>?
+            </p>
+
+            <p>This action cannot be undone.</p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="delete-button">
+                    Yes, Delete Task
+                </button>
+
+                <a href="{% url 'dashboard' %}" class="cancel-button">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

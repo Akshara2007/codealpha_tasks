@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task | TaskFlow</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Task<span>Flow</span></h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-secondary">← Dashboard</a>
+    </header>
+
+    <main>
+        <div class="form-card">
+            <h2>Edit Task ✏️</h2>
+            <p class="welcome">
+                Update the details of your task.
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="title">Task Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="{{ task.title }}"
+                    maxlength="200"
+                    required
+                >
+
+                <br><br>
+
+                <label for="description">Task Description</label>
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="4"
+                >{{ task.description }}</textarea>
+
+                <br><br>
+
+                <label for="assigned_to">Assign To</label>
+                <select id="assigned_to" name="assigned_to">
+                    <option value="">Unassigned</option>
+                    {% for user in users %}
+                        <option
+                            value="{{ user.id }}"
+                            {% if task.assigned_to_id == user.id %}selected{% endif %}
+                        >
+                            {{ user.username }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <br><br>
+
+                <label for="status">Task Status</label>
+                <select id="status" name="status">
+                    <option value="todo" {% if task.status == "todo" %}selected{% endif %}>
+                        To Do
+                    </option>
+                    <option value="in_progress" {% if task.status == "in_progress" %}selected{% endif %}>
+                        In Progress
+                    </option>
+                    <option value="completed" {% if task.status == "completed" %}selected{% endif %}>
+                        Completed
+                    </option>
+                </select>
+
+                <br><br>
+
+                <label for="due_date">Due Date</label>
+                <input
+                    type="date"
+                    id="due_date"
+                    name="due_date"
+                    value="{{ task.due_date|date:'Y-m-d' }}"
+                >
+
+                <div class="form-actions">
+                    <button type="submit">Save Changes</button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

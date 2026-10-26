@@ -1,0 +1,161 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow | Dashboard</title>
+    <link rel="stylesheet" href="{% static 'projects/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>Task<span>Flow</span></h1>
+
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout ↗</button>
+        </form>
+    </header>
+
+    <main>
+        <div class="dashboard-heading">
+            <div>
+                <h2>My Dashboard</h2>
+                <p class="welcome">Welcome back, {{ request.user.username }}! Manage your projects and tasks here.</p>
+            </div>
+
+            <a href="{% url 'create_project' %}" class="btn">
+                + Create Project
+            </a>
+        </div>
+
+        {% for project in projects %}
+            <section class="project-card">
+
+                <div class="project-top">
+                    <div>
+                        <h3>📁 {{ project.title }}</h3>
+
+                        <p class="project-description">
+                            {{ project.description|default:"No description added yet." }}
+                        </p>
+
+                        <p class="project-date">
+                            Created on {{ project.created_at|date:"d M Y" }}
+                        </p>
+                    </div>
+
+                    <a href="{% url 'create_task' project.id %}" class="btn btn-secondary">
+                        + Add Task
+                    </a>
+                </div>
+                {% with total_tasks=project.tasks.count %}
+                    {% if total_tasks > 0 %}
+                        {% with completed_tasks=project.tasks.all %}
+                            <div class="project-progress">
+                                <div class="progress-info">
+                                    <strong>Project Progress</strong>
+                                    <span>
+                                        {{ project.tasks.all|length }} total tasks
+                                    </span>
+                                </div>
+
+                                <div class="progress-track">
+                                    <div class="progress-fill"
+                                         style="width: {% widthratio project.tasks.all|length total_tasks 100 %}%;">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% else %}
+                        <div class="project-progress">
+                            <strong>Project Progress</strong>
+                            <p>No tasks added yet.</p>
+                        </div>
+                    {% endif %}
+                {% endwith %}
+                            <div class="project-progress">
+                    <div class="progress-info">
+                        <strong>Project Progress</strong>
+                        <span>
+                            {{ project.completed_tasks_count }}/{{ project.total_tasks_count }} tasks completed
+                            ({{ project.progress_percentage }}%)
+                        </span>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-fill"
+                             style="width: {{ project.progress_percentage }}%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks-heading">
+                    <h4>Project Tasks</h4>
+                    <span>{{ project.tasks.count }} task{{ project.tasks.count|pluralize }}</span>
+                </div>
+
+                {% for task in project.tasks.all %}
+                    <div class="task-card">
+                        <h5>{{ task.title }}</h5>
+
+                        <p>
+                            {{ task.description|default:"No task description." }}
+                        </p>
+
+                        <p>
+                            <strong>Assigned to:</strong>
+                            {% if task.assigned_to %}
+                                {{ task.assigned_to.username }}
+                            {% else %}
+                                Unassigned
+                            {% endif %}
+                        </p>
+
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="status status-{{ task.status }}">
+                                {{ task.get_status_display }}
+                            </span>
+                        </p>
+
+                        <p>
+                            <strong>Due date:</strong>
+                            {% if task.due_date %}
+                                {{ task.due_date|date:"d M Y" }}
+                            {% else %}
+                                Not set
+                            {% endif %}
+                        </p>
+                                                <div class="task-actions">
+                            <a href="{% url 'edit_task' task.id %}" class="btn btn-secondary">
+                                ✏️ Edit
+                            </a>
+
+                            <a href="{% url 'delete_task' task.id %}" class="btn btn-danger">
+                                🗑️ Delete
+                            </a>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="empty-state">
+                        <p>No tasks in this project yet.</p>
+                        <p>Click <strong>+ Add Task</strong> to get started!</p>
+                    </div>
+                {% endfor %}
+
+            </section>
+        {% empty %}
+            <div class="empty-state">
+                <h3>No projects yet!</h3>
+                <p>Create your first project to start managing tasks.</p>
+                <a href="{% url 'create_project' %}" class="btn">
+                    + Create Your First Project
+                </a>
+            </div>
+        {% endfor %}
+
+    </main>
+
+</body>
+</html>

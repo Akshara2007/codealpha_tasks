@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConnectHub - Social Media</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            color: #222;
+        }
+
+        header {
+            background: #172554;
+            color: white;
+            padding: 18px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        header a {
+            color: white;
+            margin-left: 10px;
+        }
+
+        main {
+            max-width: 750px;
+            margin: 30px auto;
+            padding: 0 16px;
+        }
+
+        .post {
+            background: white;
+            padding: 20px;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        .username {
+            color: #172554;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #777;
+            font-size: 12px;
+        }
+
+        textarea, input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        button {
+            background: #172554;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+
+        button:hover {
+            background: #263d80;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .comment {
+            background: #f5f6fa;
+            padding: 8px;
+            border-radius: 6px;
+            margin: 6px 0;
+        }
+
+        .message {
+            color: #b91c1c;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>ConnectHub</h1>
+
+    <nav>
+        {% if user.is_authenticated %}
+            <span>Hi, {{ user.username }}!</span>
+
+            <form method="POST" action="{% url 'logout' %}"
+                  style="display: inline;">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    <h2>Latest Posts</h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'create_post' %}" class="post">
+            {% csrf_token %}
+            <textarea name="content"
+                      placeholder="What's on your mind?"
+                      rows="3"
+                      required></textarea>
+            <button type="submit">Share Post</button>
+        </form>
+    {% else %}
+        <p>
+            <a href="{% url 'login' %}">Log in</a>
+            to create a post, like, or comment.
+        </p>
+    {% endif %}
+
+    {% for post in posts %}
+        <article class="post">
+
+            
+
+<div class="username">
+    <a href="{% url 'profile' post.user.id %}"
+       style="color: #172554; text-decoration: none;">
+        {{ post.user.username }}
+    </a>
+
+    <small>
+        {{ post.user.followers.count }} followers
+    </small>
+</div>
+
+{% if user.is_authenticated and user != post.user %}
+    <form method="POST" action="{% url 'follow_user' post.user.id %}">
+        {% csrf_token %}
+        <button type="submit">Follow / Unfollow</button>
+    </form>
+{% endif %}
+
+
+            <p>{{ post.content }}</p>
+
+            <div class="date">{{ post.created_at }}</div>
+
+            <p>❤️ {{ post.likes.count }} Likes</p>
+
+            {% if user.is_authenticated %}
+                <form method="POST"
+                      action="{% url 'like_post' post.id %}">
+                    {% csrf_token %}
+                    <button type="submit">❤️ Like / Unlike</button>
+                </form>
+
+                <form method="POST"
+                      action="{% url 'add_comment' post.id %}">
+                    {% csrf_token %}
+                    <input type="text"
+                           name="content"
+                           placeholder="Write a comment..."
+                           required>
+                    <button type="submit">Comment</button>
+                </form>
+            {% endif %}
+
+            <h4>Comments</h4>
+
+            {% for comment in post.comments.all %}
+                <div class="comment">
+                    <strong>{{ comment.user.username }}:</strong>
+                    {{ comment.content }}
+                </div>
+            {% empty %}
+                <p>No comments yet.</p>
+            {% endfor %}
+
+        </article>
+    {% empty %}
+        <div class="empty">
+            <h3>No posts yet!</h3>
+            <p>Be the first to share something.</p>
+        </div>
+    {% endfor %}
+
+</main>
+
+</body>
+</html>
