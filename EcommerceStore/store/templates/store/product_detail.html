@@ -1,0 +1,36 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | CodeAlpha Store</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+
+    <header>
+        <h1>{{ product.name }}</h1>
+        <p>Product Details</p>
+    </header>
+
+    <main class="product-card">
+
+        {% if product.image_url %}
+        <img src="{{ product.image_url }}"
+             alt="{{ product.name }}"
+             width="250">
+        {% endif %}
+
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p class="price">Price: ₹{{ product.price }}</p>
+        <p>Available Stock: {{ product.stock }}</p>
+
+        <a href="/">Back to Products</a>
+
+    </main>
+
+</body>
+</html>

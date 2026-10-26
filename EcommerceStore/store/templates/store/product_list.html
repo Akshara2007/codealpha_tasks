@@ -1,0 +1,63 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAlpha Store</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+
+   
+<header>
+    <h1>CodeAlpha Store</h1>
+    <p>Find your favourite products</p>
+
+    <form method="GET" action="">
+        <input
+            type="text"
+            name="q"
+            placeholder="Search products..."
+            value="{{ query }}"
+        >
+        <button type="submit">Search</button>
+    </form>
+</header>
+
+
+    <main class="products">
+        {% for product in products %}
+        <article class="product-card">
+
+            {% if product.image_url %}
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+            {% endif %}
+
+            <h2>{{ product.name }}</h2>
+            <p>{{ product.description|truncatewords:15 }}</p>
+            <p class="price">₹{{ product.price }}</p>
+           <p>Stock: {{ product.stock }}</p>
+
+{% if product.stock > 0 %}
+    <p class="availability">In Stock</p>
+{% else %}
+    <p class="out-of-stock">Out of Stock</p>
+{% endif %}
+
+            <a href="{% url 'product_detail' product.id %}">
+                View Details
+                
+<a href="{% url 'add_to_cart' product.id %}">Add to Cart</a>
+
+            </a>
+
+        </article>
+        {% empty %}
+        <p>No products available yet. Add products through the admin panel.</p>
+        {% endfor %}
+    </main>
+
+</body>
+</html>

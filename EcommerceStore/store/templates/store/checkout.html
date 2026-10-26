@@ -1,0 +1,32 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout - CodeAlpha Store</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Checkout</h1>
+    </header>
+
+    <main class="product-card">
+        <h2>Order Summary</h2>
+
+        {% for product, quantity in items %}
+            <p>{{ product.name }} × {{ quantity }} — ₹{{ product.price }}</p>
+        {% endfor %}
+
+        <h3>Total: ₹{{ total }}</h3>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Place Order</button>
+        </form>
+
+        <p><a href="{% url 'cart' %}">Back to Cart</a></p>
+    </main>
+</body>
+</html>
